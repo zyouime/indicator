@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "indicator",
+  "version": "${version}",
+  "name": "Health Indicator",
+  "description": "Simple Health Indicator\nPress F12 to toggle",
+  "authors": ["zyouime13"],
+  "contact": {
+  },
+  "license": "MIT",
+  "icon": "assets/indicator/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.zyouime.indicator.client.HealthIndicatorClient"
+    ],
+    "main": [
+      "me.zyouime.indicator.HealthIndicator"
+    ],
+    "modmenu": [
+      "me.zyouime.indicator.modmenu.ModMenuImpl"
+    ]
+  },
+  "mixins": [
+    "indicator.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Telegram": "https://t.me/zyouime13"
+      }
+    }
+  }
+}

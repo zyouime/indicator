@@ -1,0 +1,22 @@
+{
+  "indicator.key.toggle": "Toggle bind",
+  "indicator.key.settings": "Open settings",
+  "indicator.key.category": "Health indicator",
+  "indicator.screen.title": "Indicator Setting",
+  "indicator.screen.category": "Main",
+  "indicator.screen.option1": "Scoreboard mode",
+  "indicator.screen.option1.tooltip": "Takes the health value from the player's table (This is the value that is under the player's nickname)",
+  "indicator.screen.option2": "Animation",
+  "indicator.screen.option2.tooltip": "Vanilla animation of hearts like from status bar",
+  "indicator.screen.option3": "Hearts size",
+  "indicator.screen.option4": "Offset",
+  "indicator.screen.option4.tooltip": "Select how far away from the player the indicator will be displayed",
+  "indicator.screen.option5": "In one row",
+  "indicator.screen.option5.tooltip": "Display all entity health in one row",
+  "indicator.screen.option7": "Show health on mobs",
+  "indicator.screen.option8": "Show health on players",
+  "indicator.screen.option9": "Show health in invisible entities",
+  "indicator.screen.option10": "Show your health",
+  "indicator.screen.option11": "Show display name for invisible entities",
+  "indicator.screen.option12": "Show your display name"
+}

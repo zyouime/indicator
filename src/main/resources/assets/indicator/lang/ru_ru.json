@@ -1,0 +1,22 @@
+{
+  "indicator.key.toggle": "Включить / выключить",
+  "indicator.key.settings": "Открыть настройки",
+  "indicator.key.category": "Индикатор здоровья",
+  "indicator.screen.title": "Настройки индикатора",
+  "indicator.screen.category": "Основное",
+  "indicator.screen.option1": "Режим таблицы очков",
+  "indicator.screen.option1.tooltip": "Берет значение здоровья из таблицы игрока (Это то значение, которое находится под ником игрока)",
+  "indicator.screen.option2": "Анимация",
+  "indicator.screen.option2.tooltip": "Ванильная анимация сердец, как на статусной панели",
+  "indicator.screen.option3": "Размер сердец",
+  "indicator.screen.option4": "Смещение",
+  "indicator.screen.option4.tooltip": "Выберите, на каком расстоянии от сущности будет отображаться индикатор",
+  "indicator.screen.option5": "В один ряд",
+  "indicator.screen.option5.tooltip": "Отображать всё здоровье сущностей в один ряд",
+  "indicator.screen.option7": "Показывать здоровье у мобов",
+  "indicator.screen.option8": "Показывать здоровье у игроков",
+  "indicator.screen.option9": "Показывать здоровье у невидимых сущностей",
+  "indicator.screen.option10": "Показывать своё здоровье",
+  "indicator.screen.option11": "Показывать имя у невидимых сущностей",
+  "indicator.screen.option12": "Показывать своё имя"
+}

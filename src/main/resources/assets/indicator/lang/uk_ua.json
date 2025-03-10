@@ -1,0 +1,22 @@
+{
+  "indicator.key.toggle": "Увімкнути / вимкнути",
+  "indicator.key.settings": "Відкрити налаштування",
+  "indicator.key.category": "Індикатор здоров’я",
+  "indicator.screen.title": "Налаштування індикатора",
+  "indicator.screen.category": "Основне",
+  "indicator.screen.option1": "Режим таблиці очок",
+  "indicator.screen.option1.tooltip": "Бере значення здоров'я з таблиці гравця (Це значення, яке знаходиться під ніком гравця)",
+  "indicator.screen.option2": "Анімація",
+  "indicator.screen.option2.tooltip": "Ванільна анімація сердець, як на статусній панелі",
+  "indicator.screen.option3": "Розмір сердець",
+  "indicator.screen.option4": "Зміщення",
+  "indicator.screen.option4.tooltip": "Виберіть, на якій відстані від сутності буде відображатися індикатор",
+  "indicator.screen.option5": "В один ряд",
+  "indicator.screen.option5.tooltip": "Відображати все здоров’я сутностей в один ряд",
+  "indicator.screen.option7": "Показувати здоров’я у мобів",
+  "indicator.screen.option8": "Показувати здоров’я у гравців",
+  "indicator.screen.option9": "Показувати здоров’я у невидимих сутностей",
+  "indicator.screen.option10": "Показувати своє здоров’я",
+  "indicator.screen.option11": "Показувати ім’я для невидимих сутностей",
+  "indicator.screen.option12": "Показувати своє ім’я"
+}
