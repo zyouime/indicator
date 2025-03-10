@@ -38,7 +38,7 @@ public class HealthIndicator implements ModInitializer {
                 settings.enabled.save();
             }
             if (SETTINGS_KEY.wasPressed()) {
-                client.openScreen(SettingScreen.getScreen(client.currentScreen));
+                client.setScreen(SettingScreen.getScreen(client.currentScreen));
             }
         });
     }
