@@ -121,7 +121,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, DrawableHelper.GUI_ICONS_TEXTURE);
         RenderSystem.enableDepthTest();
-        Matrix4f model = matrixStack.peek().getModel();
+        Matrix4f model = matrixStack.peek().getPositionMatrix();
 
         int health, healthYellow;
         int maxHealth = MathHelper.ceil(livingEntity.getMaxHealth());
