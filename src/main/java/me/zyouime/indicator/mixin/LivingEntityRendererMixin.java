@@ -5,7 +5,6 @@ import me.zyouime.indicator.util.AnimData;
 import me.zyouime.indicator.util.HeartType;
 import me.zyouime.indicator.util.Wrapper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
@@ -17,6 +16,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -39,6 +39,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
     private Random random = new Random();
     private Map<Integer, Integer> entitiesHealth = new WeakHashMap<>();
     private Map<Integer, AnimData> entityAnimData = new WeakHashMap<>();
+    private static final Identifier GUI_ICONS_TEXTURE = new Identifier("textures/gui/icons.png");
 
     protected LivingEntityRendererMixin(EntityRendererFactory.Context ctx) {
         super(ctx);
@@ -121,7 +122,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         BufferBuilder vertexConsumer = tessellator.getBuffer();
         vertexConsumer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderTexture(0, DrawableHelper.GUI_ICONS_TEXTURE);
+        RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
         RenderSystem.enableDepthTest();
         Matrix4f model = matrixStack.peek().getPositionMatrix();
 
