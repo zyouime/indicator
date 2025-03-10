@@ -9,7 +9,9 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.entity.*;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -19,9 +21,9 @@ import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,9 +40,10 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
     private Map<Integer, Integer> entitiesHealth = new WeakHashMap<>();
     private Map<Integer, AnimData> entityAnimData = new WeakHashMap<>();
 
-    protected LivingEntityRendererMixin(EntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    protected LivingEntityRendererMixin(EntityRendererFactory.Context ctx) {
+        super(ctx);
     }
+
 
     @Inject(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("RETURN"))
     private void render(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
@@ -116,14 +119,11 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         matrixStack.scale(pixelSize, pixelSize, pixelSize);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder vertexConsumer = tessellator.getBuffer();
-        vertexConsumer.begin(7, VertexFormats.POSITION_TEXTURE);
-        client.getTextureManager().bindTexture(DrawableHelper.GUI_ICONS_TEXTURE);
+        vertexConsumer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShaderTexture(0, DrawableHelper.GUI_ICONS_TEXTURE);
         RenderSystem.enableDepthTest();
-        RenderSystem.enableAlphaTest();
-        RenderSystem.defaultAlphaFunc();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        Matrix4f model = matrixStack.peek().getModel();
+        Matrix4f model = matrixStack.peek().getPositionMatrix();
 
         int health, healthYellow;
         int maxHealth = MathHelper.ceil(livingEntity.getMaxHealth());
@@ -136,7 +136,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
             healthYellow = MathHelper.ceil(livingEntity.getAbsorptionAmount());
         }
 
-        int entityId = livingEntity.getEntityId();
+        int entityId = livingEntity.getId();
         long l = Util.getMeasuringTimeMs();
         AnimData animData = entityAnimData.get(entityId);
         if (animData == null) {
@@ -210,9 +210,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         }
         tessellator.draw();
         matrixStack.pop();
-        RenderSystem.disableBlend();
         RenderSystem.enableDepthTest();
-        RenderSystem.disableAlphaTest();
     }
 
     private static void drawHeart(Matrix4f model, VertexConsumer vertexConsumer, float x, float y, float z, HeartType type) {
