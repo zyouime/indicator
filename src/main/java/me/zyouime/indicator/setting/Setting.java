@@ -1,21 +1,21 @@
 package me.zyouime.indicator.setting;
 
-import me.zyouime.indicator.config.ConfigKey;
 import me.zyouime.indicator.config.ModConfig;
 
-public abstract class Setting<T> {
+public class Setting<T> {
 
     private T value;
-    private final ConfigKey configKey;
+    private final String configKey;
 
-    public Setting(T value, ConfigKey configKey) {
-        this.value = value;
+    public Setting(String configKey, Class<T> type) {
         this.configKey = configKey;
+        Object obj = ModConfig.configData.getField(configKey);
+        this.value = type.isInstance(obj) ? type.cast(obj) : null;
     }
 
     public void save() {
         ModConfig.loadConfig();
-        ModConfig.configData.setField(configKey.getKey(), value);
+        ModConfig.configData.setField(configKey, value);
         ModConfig.saveConfig();
     }
 
@@ -26,5 +26,4 @@ public abstract class Setting<T> {
     public void setValue(T value) {
         this.value = value;
     }
-
 }
