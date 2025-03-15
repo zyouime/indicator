@@ -1,7 +1,5 @@
 package me.zyouime.indicator;
 
-import me.zyouime.indicator.config.ConfigData;
-import me.zyouime.indicator.config.ConfigKey;
 import me.zyouime.indicator.config.ModConfig;
 import me.zyouime.indicator.screen.SettingScreen;
 import me.zyouime.indicator.setting.BooleanSetting;
@@ -46,20 +44,19 @@ public class HealthIndicator implements ModInitializer {
 
     public static class Settings {
         public List<Setting<?>> settingsList = new ArrayList<>();
-        ConfigData configData = ModConfig.configData;
 
-        public BooleanSetting enabled = register(new BooleanSetting((Boolean) configData.getField("enabled"), ConfigKey.HEARTS));
-        public NumberSetting heartsSize = register(new NumberSetting((Float) configData.getField("heartsSize"), ConfigKey.HEARTS_SIZE));
-        public NumberSetting heartsOffset = register(new NumberSetting((Float) configData.getField("heartsOffset"), ConfigKey.HEARTS_OFFSET));
-        public BooleanSetting animation = register(new BooleanSetting((Boolean) configData.getField("animation"), ConfigKey.ANIMATION));
-        public BooleanSetting inOneRow = register(new BooleanSetting((Boolean) configData.getField("inOneRow"), ConfigKey.IN_ONE_ROW));
-        public BooleanSetting showOnMobs = register(new BooleanSetting((Boolean) configData.getField("showOnMobs"), ConfigKey.SHOW_ON_MOBS));
-        public BooleanSetting showOnPlayers = register(new BooleanSetting((Boolean) configData.getField("showOnPlayers"), ConfigKey.SHOW_ON_PLAYERS));
-        public BooleanSetting showHealthInInvisibleEntities = register(new BooleanSetting((Boolean) configData.getField("showHealthInInvisibleEntities"), ConfigKey.SHOW_HEALTH_IN_INVISIBLE_ENTITIES));
-        public BooleanSetting showDisplayNameForInvisibleEntities = register(new BooleanSetting((Boolean) configData.getField("showDisplayNameForInvisibleEntities"), ConfigKey.SHOW_DISPLAY_NAME_FOR_INVISIBLE_ENTITIES));
-        public BooleanSetting showYourHealth = register(new BooleanSetting((Boolean) configData.getField("showYourHealth"), ConfigKey.SHOW_YOUR_HEALTH));
-        public BooleanSetting showYourDisplayName = register(new BooleanSetting((Boolean) configData.getField("showYourDisplayName"), ConfigKey.SHOW_YOUR_DISPLAY_NAME));
-        public BooleanSetting scoreboardMode = register(new BooleanSetting((Boolean) configData.getField("scoreboardMode"), ConfigKey.SCOREBOARD_MODE));
+        public BooleanSetting enabled = register(new BooleanSetting("enabled"));
+        public NumberSetting heartsSize = register(new NumberSetting("heartsSize"));
+        public NumberSetting heartsOffset = register(new NumberSetting("heartsOffset"));
+        public BooleanSetting animation = register(new BooleanSetting("animation"));
+        public BooleanSetting inOneRow = register(new BooleanSetting("inOneRow"));
+        public BooleanSetting showOnMobs = register(new BooleanSetting("showOnMobs"));
+        public BooleanSetting showOnPlayers = register(new BooleanSetting("showOnPlayers"));
+        public BooleanSetting showHealthInInvisibleEntities = register(new BooleanSetting("showHealthInInvisibleEntities"));
+        public BooleanSetting showDisplayNameForInvisibleEntities = register(new BooleanSetting("showDisplayNameForInvisibleEntities"));
+        public BooleanSetting showYourHealth = register(new BooleanSetting("showYourHealth"));
+        public BooleanSetting showYourDisplayName = register(new BooleanSetting("showYourDisplayName"));
+        public BooleanSetting scoreboardMode = register(new BooleanSetting("scoreboardMode"));
 
         private <T extends Setting<?>> T register(T s) {
             this.settingsList.add(s);
