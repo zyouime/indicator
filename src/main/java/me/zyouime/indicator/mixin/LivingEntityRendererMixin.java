@@ -46,6 +46,8 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
     private void render(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
         if (!SETTINGS.enabled.getValue()) return;
         if (livingEntity instanceof ArmorStandEntity) return;
+        boolean isPlayer = livingEntity instanceof PlayerEntity;
+        if (isPlayer && isNotSurvivalMode((PlayerEntity) livingEntity)) return;
 
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.cameraEntity != null && client.world != null) {
@@ -55,9 +57,8 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
             if (hitResult.getType() == HitResult.Type.BLOCK) return;
         }
 
-        boolean isClientPlayer = livingEntity instanceof ClientPlayerEntity;
-        boolean isPlayer = livingEntity instanceof PlayerEntity;
         boolean isInvisible = livingEntity.isInvisible();
+        boolean isClientPlayer = livingEntity instanceof ClientPlayerEntity;
 
         if (isInvisible) {
             if (isClientPlayer) {
@@ -79,7 +80,6 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         }
 
         if (isPlayer) {
-            if (isNotSurvivalMode((PlayerEntity) livingEntity)) return;
             if (isClientPlayer) {
                 if (!SETTINGS.showYourHealth.getValue()) return;
             } else {
