@@ -45,7 +45,6 @@ public class HealthIndicator implements ModInitializer {
 
     public static class Settings {
         public List<Setting<?>> settingsList = new ArrayList<>();
-        ConfigData configData = ModConfig.configData;
 
         public BooleanSetting enabled = register(new BooleanSetting("enabled"));
         public NumberSetting heartsSize = register(new NumberSetting("heartsSize"));
@@ -54,8 +53,6 @@ public class HealthIndicator implements ModInitializer {
         public BooleanSetting inOneRow = register(new BooleanSetting("inOneRow"));
         public BooleanSetting showOnMobs = register(new BooleanSetting("showOnMobs"));
         public BooleanSetting showOnPlayers = register(new BooleanSetting("showOnPlayers"));
-        public BooleanSetting showHealthInInvisibleEntities = register(new BooleanSetting("showHealthInInvisibleEntities"));
-        public BooleanSetting showDisplayNameForInvisibleEntities = register(new BooleanSetting("showDisplayNameForInvisibleEntities"));
         public BooleanSetting showYourHealth = register(new BooleanSetting("showYourHealth"));
         public BooleanSetting showYourDisplayName = register(new BooleanSetting("showYourDisplayName"));
         public BooleanSetting scoreboardMode = register(new BooleanSetting("scoreboardMode"));
