@@ -40,6 +40,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
     private Map<Integer, Integer> entitiesHealth = new WeakHashMap<>();
     private Map<Integer, AnimData> entityAnimData = new WeakHashMap<>();
     private static final Identifier GUI_ICONS_TEXTURE = new Identifier("textures/gui/icons.png");
+    private MinecraftClient client = MinecraftClient.getInstance();
 
     protected LivingEntityRendererMixin(EntityRendererFactory.Context ctx) {
         super(ctx);
@@ -50,10 +51,10 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
     private void render(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
         if (!SETTINGS.enabled.getValue()) return;
         if (livingEntity instanceof ArmorStandEntity) return;
+        if (livingEntity.isInvisible()) return;
         boolean isPlayer = livingEntity instanceof PlayerEntity;
         if (isPlayer && isNotSurvivalMode((PlayerEntity) livingEntity)) return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
         if (client.cameraEntity != null && client.world != null) {
             Vec3d entityPos = livingEntity.getCameraPosVec(1.0F);
             Vec3d cameraPos = client.cameraEntity.getCameraPosVec(1.0F);
@@ -61,22 +62,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
             if (hitResult.getType() == HitResult.Type.BLOCK) return;
         }
 
-        boolean isClientPlayer = livingEntity instanceof ClientPlayerEntity;
-        boolean isInvisible = livingEntity.isInvisible();
-
-        if (isInvisible) {
-            if (isClientPlayer) {
-                if (SETTINGS.showYourDisplayName.getValue()) {
-                    this.renderLabelIfPresent(livingEntity, livingEntity.getDisplayName(), matrixStack, vertexConsumerProvider, i);
-                }
-                if (!SETTINGS.showYourHealth.getValue()) return;
-            } else {
-                if (SETTINGS.showDisplayNameForInvisibleEntities.getValue()) {
-                    this.renderLabelIfPresent(livingEntity, livingEntity.getDisplayName(), matrixStack, vertexConsumerProvider, i);
-                }
-                if (!SETTINGS.showHealthInInvisibleEntities.getValue()) return;
-            }
-        } else if (isClientPlayer) {
+        if (livingEntity instanceof ClientPlayerEntity) {
             if (SETTINGS.showYourDisplayName.getValue()) {
                 this.renderLabelIfPresent(livingEntity, livingEntity.getDisplayName(), matrixStack, vertexConsumerProvider, i);
             }
@@ -84,12 +70,10 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         }
 
         if (isPlayer) {
-            if (isClientPlayer) {
-                if (!SETTINGS.showYourHealth.getValue()) return;
-            } else {
-                if (!SETTINGS.showOnPlayers.getValue()) return;
-            }
-        } else if (!SETTINGS.showOnMobs.getValue()) return;
+            if (!SETTINGS.showOnPlayers.getValue()) return;
+        } else {
+            if (!SETTINGS.showOnMobs.getValue()) return;
+        }
 
         matrixStack.push();
         double d = this.dispatcher.getSquaredDistanceToCamera(livingEntity);
@@ -106,8 +90,8 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
 
         float posTOP = livingEntity.getHeight() + heartsOffset + offset;
         matrixStack.translate(0, posTOP, 0);
-        if (livingEntity instanceof AbstractClientPlayerEntity) {
-            AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) livingEntity;
+        if (isPlayer) {
+            PlayerEntity player = (PlayerEntity) livingEntity;
             if (d <= 4096.0) {
                 matrixStack.translate(0.0D, 9.0F * 1.15F * 0.025F, 0.0D);
                 if (d < 100.0 && player.getScoreboard().getObjectiveForSlot(2) != null) {
@@ -128,7 +112,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
 
         int health, healthYellow;
         int maxHealth = MathHelper.ceil(livingEntity.getMaxHealth());
-        if (livingEntity instanceof PlayerEntity && SETTINGS.scoreboardMode.getValue()) {
+        if (isPlayer && SETTINGS.scoreboardMode.getValue()) {
             Scoreboard scoreboard = ((PlayerEntity) livingEntity).getScoreboard();
             health = scoreboard.getPlayerScore(livingEntity.getName().getString(), scoreboard.getObjectiveForSlot(2)).getScore();
             healthYellow = 0;
@@ -138,24 +122,13 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
         }
 
         int entityId = livingEntity.getId();
-        long l = Util.getMeasuringTimeMs();
-        AnimData animData = entityAnimData.get(entityId);
-        if (animData == null) {
-            animData = new AnimData();
-            entityAnimData.put(entityId, animData);
-        }
+        AnimData animData = entityAnimData.computeIfAbsent(entityId, k -> new AnimData());
         Integer lastHealth = entitiesHealth.get(entityId);
         if (lastHealth != null) {
             if (health < lastHealth) {
-                animData.lastHealthCheckTime = l;
                 animData.heartJumpEndTick = ticks + 20;
             } else if (health > lastHealth) {
-                animData.lastHealthCheckTime = l;
                 animData.heartJumpEndTick = ticks + 10;
-            }
-            if (l - animData.lastHealthCheckTime > 1000L) {
-                animData.lastHealthCheckTime = l;
-                animData.heartJumpEndTick = 0;
             }
         }
         entitiesHealth.put(entityId, health);
