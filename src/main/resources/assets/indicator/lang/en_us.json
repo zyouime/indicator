@@ -15,8 +15,6 @@
   "indicator.screen.option5.tooltip": "Display all entity health in one row",
   "indicator.screen.option7": "Show health on mobs",
   "indicator.screen.option8": "Show health on players",
-  "indicator.screen.option9": "Show health in invisible entities",
   "indicator.screen.option10": "Show your health",
-  "indicator.screen.option11": "Show display name for invisible entities",
   "indicator.screen.option12": "Show your display name"
 }

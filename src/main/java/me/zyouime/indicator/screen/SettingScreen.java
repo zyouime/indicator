@@ -70,19 +70,9 @@ public class SettingScreen implements Wrapper {
                 .setSaveConsumer(bl -> SETTINGS.showOnPlayers.setValue(bl))
                 .build());
 
-        general.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("indicator.screen.option9"), SETTINGS.showHealthInInvisibleEntities.getValue())
-                .setDefaultValue(true)
-                .setSaveConsumer(bl -> SETTINGS.showHealthInInvisibleEntities.setValue(bl))
-                .build());
-
         general.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("indicator.screen.option10"), SETTINGS.showYourHealth.getValue())
                 .setDefaultValue(false)
                 .setSaveConsumer(bl -> SETTINGS.showYourHealth.setValue(bl))
-                .build());
-
-        general.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("indicator.screen.option11"), SETTINGS.showDisplayNameForInvisibleEntities.getValue())
-                .setDefaultValue(true)
-                .setSaveConsumer(bl -> SETTINGS.showDisplayNameForInvisibleEntities.setValue(bl))
                 .build());
 
         general.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("indicator.screen.option12"), SETTINGS.showYourDisplayName.getValue())
