@@ -10,8 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ModConfig {
-    private static final File FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), "health-indicator.json");
-    private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+    private static final File FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), "health-indicator2.json");
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static ConfigData configData;
 
     public static void loadConfig() {
